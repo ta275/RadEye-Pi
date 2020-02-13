@@ -19,7 +19,7 @@
 #define PAGE_SIZE (4*1024)
 #define BLOCK_SIZE (4*1024)
 
-static uint32_t setup_io()
+static volatile uint32_t * setup_io()
 {
    /* open /dev/mem */
 	int  mem_fd;
@@ -69,17 +69,17 @@ static void writeHigh(PiGPIO* self){
 	*(self->setupGPIO + 7) = (1<<self->PINNUM);
 }
 
-static void writeLow(GPIO* self){
+static void writeLow(PiGPIO* self){
 	*(self->setupGPIO + 10) = (1<<self->PINNUM);
 
 }
 
-static uint8_t read(GPIO* self){ 
+static uint8_t readPin(PiGPIO* self){ 
 
 	return (uint8_t) (((*(self->setupGPIO+13)&(1<<self->PINNUM)) >> (self->PINNUM)) & 0x00000001);
 }
 
-PiGPIO* createPiGPIO(uint8_t PINNUM){
+PiGPIO* createPiGPIO(uint32_t PINNUM){
 
 	PiGPIO* gpio = (PiGPIO*) malloc(sizeof(PiGPIO));
 	if (gpio == NULL){
@@ -87,9 +87,12 @@ PiGPIO* createPiGPIO(uint8_t PINNUM){
 		;
 	}
 
-	uint32_t setupGPIO = setup_io();
+	volatile uint32_t * setupGPIO = setup_io();
 	
-	*gpio = (PiGPIO){.PINNUM=PINNUM,.setupGPIO=setupGPIO};
+	*gpio = (PiGPIO){.PINNUM=PINNUM,.setupGPIO=setupGPIO,
+			.setAsInput=setAsInput, .setAsOutput=setAsOutput,
+			.writeHigh=writeHigh, .writeLow=writeLow,
+			.read=readPin};
 
 	return gpio;
 }
