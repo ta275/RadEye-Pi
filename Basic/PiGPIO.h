@@ -31,6 +31,6 @@ typedef struct PiGPIO{
 
 PiGPIO* createPiGPIO(uint32_t PINNUM);	/// Create a GPIO pin
 
-PIGPIO* copyPiGPIO(PiGPIO const* in);													/// Copy a GPIO pin
+PiGPIO* copyPiGPIO(PiGPIO const* in);													/// Copy a GPIO pin
 
 void freePiGPIO (PiGPIO* in);														/// Free (delete) a GPIO pin
