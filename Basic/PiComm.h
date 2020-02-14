@@ -18,7 +18,7 @@ typedef struct PiComm {
     PiGPIO* ENPIN; //Enable Pin
     PiGPIO* DNPIN; //Done Pin
 
-    PiGPIO* DATPORT[8]; //Data Port
+    PiGPIO** DATPORT; //Data Port
 
     uint8_t numCycles; //Number of cycles
     

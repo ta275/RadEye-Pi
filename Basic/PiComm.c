@@ -73,11 +73,11 @@ PiComm* createPiComm(PiGPIO* ENPIN, PiGPIO* DNPIN, PiGPIO** DATPORT, uint8_t num
 	;
 	}
 
-	*cbus = (PiComm){.ENPIN=ENPIN, .DNPIN=DNPIN,
-						.DATPORT=DATPORT, .numCycles=numCycles,
-						.setEnHigh=setEnHigh, .setEnLow=setEnLow,
-						.writeSingle=writeSingle, .writeCycle=writeCycle,
-						.readDn=readDn, .DATASINGLE=0, .DATA=DATA};
+	*cbus = (PiComm){ .ENPIN=ENPIN, .DNPIN=DNPIN,
+		.DATPORT=DATPORT, .numCycles=numCycles,
+		.setEnHigh=setEnHigh, .setEnLow=setEnLow,
+		.writeSingle=writeSingle, .writeCycle=writeCycle,
+		.readDn=readDn, .DATASINGLE=0, .DATA=DATA };
 
 	(cbus->DNPIN)->setAsInput(cbus->DNPIN);
 	
