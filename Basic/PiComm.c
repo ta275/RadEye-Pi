@@ -11,7 +11,6 @@
 #include <stdint.h>
 
 #include <sys/time.h>
-#include <time.h>
 
 void delayMicrosecondsHard (unsigned int howLong)
 {
@@ -26,27 +25,17 @@ void delayMicrosecondsHard (unsigned int howLong)
     gettimeofday (&tNow, NULL) ;
 }
 
-void delay (unsigned int howLong)
-{
-  struct timespec sleeper, dummy ;
-
-  sleeper.tv_sec  = (time_t)(howLong / 1000) ;
-  sleeper.tv_nsec = (long)(howLong % 1000) * 1000000 ;
-
-  nanosleep (&sleeper, &dummy) ;
-}
-
 static uint8_t readDn(PiComm* self){ return (self->DNPIN)->read(self->DNPIN); }
 
 
 static void writeSingle(PiComm* self){
 	self->setEnLow(self);
 
-	delay(500);
+	delayMicrosecondsHard(500000);
+
 	while(!self->readDn(self)) {;}
 
-	// delayMicrosecondsHard(5);
-	delay(500);
+	delayMicrosecondsHard(500000);
 
 	uint8_t i;
 	uint8_t bit;
@@ -62,8 +51,11 @@ static void writeSingle(PiComm* self){
 
 	self->setEnHigh(self);
 
+	delayMicrosecondsHard(500000);
+	
 	while (self->readDn(self)) {;}
-	// delayMicrosecondsHard(5);
+	
+	delayMicrosecondsHard(500000);
 }
 
 
