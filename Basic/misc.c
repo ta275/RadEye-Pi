@@ -5,7 +5,7 @@
  * Last Modified: 14-Feb-2020
  * Author : tejas_advait
  */
-
+#include <stdlib.h>
 #include <sys/time.h>
 
 void delayMicrosecondsHard (unsigned int howLong)
