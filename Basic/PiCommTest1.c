@@ -39,12 +39,12 @@ int main(){
 	PiComm* comm = createPiComm(ENPIN, DNPIN, DATPORT, numCycles, DATA);
 
 
-	delay(2000);
+	delayMicrosecondHard(2000000);
 
 	for (i = 0; i < comm->numCycles; i++){
 		comm->DATASINGLE = comm->DATA[i];
 		comm->writeSingle(comm);
-		delay(1000);
+		delayMicrosecondHard(1000000);
 	}
 	return 0;
 }
