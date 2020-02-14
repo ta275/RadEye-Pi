@@ -52,7 +52,7 @@ static void writeSingle(PiComm* self){
 	self->setEnHigh(self);
 
 	delayMicrosecondsHard(500000);
-	
+
 	while (self->readDn(self)) {;}
 	
 	delayMicrosecondsHard(500000);
@@ -98,6 +98,7 @@ PiComm* createPiComm(PiGPIO* ENPIN, PiGPIO* DNPIN, PiGPIO** DATPORT, uint8_t num
 	(cbus->ENPIN)->setAsOutput(cbus->ENPIN);
 	cbus->setEnLow(cbus);
 
+	uint8_t i;
 	for (i = 0; i < 8; i++){
 		(cbus->DATPORT[i])->setAsOutput(cbus->DATPORT[i]);
 	}
