@@ -10,8 +10,31 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+#include <sys/time.h>
+#include <time.h>
 
-static void delayMicrosecondsHard(uint32_t l);
+void delayMicrosecondsHard (unsigned int howLong)
+{
+  struct timeval tNow, tLong, tEnd ;
+
+  gettimeofday (&tNow, NULL) ;
+  tLong.tv_sec  = howLong / 1000000 ;
+  tLong.tv_usec = howLong % 1000000 ;
+  timeradd (&tNow, &tLong, &tEnd) ;
+
+  while (timercmp (&tNow, &tEnd, <))
+    gettimeofday (&tNow, NULL) ;
+}
+
+void delay (unsigned int howLong)
+{
+  struct timespec sleeper, dummy ;
+
+  sleeper.tv_sec  = (time_t)(howLong / 1000) ;
+  sleeper.tv_nsec = (long)(howLong % 1000) * 1000000 ;
+
+  nanosleep (&sleeper, &dummy) ;
+}
 
 static uint8_t readDn(PiComm* self){ return (self->DNPIN)->read(self->DNPIN); }
 
@@ -19,9 +42,11 @@ static uint8_t readDn(PiComm* self){ return (self->DNPIN)->read(self->DNPIN); }
 static void writeSingle(PiComm* self){
 	self->setEnLow(self);
 
+	delay(500);
 	while(!self->readDn(self)) {;}
 
 	// delayMicrosecondsHard(5);
+	delay(500);
 
 	uint8_t i;
 	uint8_t bit;

@@ -93,7 +93,7 @@ PiGPIO* createPiGPIO(uint32_t PINNUM){
 			.setAsInput=setAsInput, .setAsOutput=setAsOutput,
 			.writeHigh=writeHigh, .writeLow=writeLow,
 			.read=readPin};
-
+			
 	return gpio;
 }
 
