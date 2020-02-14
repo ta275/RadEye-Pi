@@ -39,8 +39,8 @@ int main(){
 
 	while (1){
 		val = DNPIN->read(DNPIN);
-		delay(1000);
-		printf("DNPIN Val: %d", val);
+		delayMicrosecondsHard(1000000);
+		printf("DNPIN Val: %d \n", val);
 
 	}
 	return 0;
