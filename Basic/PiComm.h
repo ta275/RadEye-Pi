@@ -28,6 +28,7 @@ typedef struct PiComm {
     void (*writeCycle)(struct PiComm*); //Write the data port numCycles times
     void (*setEnHigh)(struct PiComm*); //Set enable pin to high
     void (*setEnLow)(struct PiComm*); //Set enable pin to low
+    void (*setData)(struct PiComm*, int16_t* rots); //Set DATA from rotations
     uint8_t DATASINGLE; //Single data for writing
     uint8_t* DATA; //Cycle data for writing
 

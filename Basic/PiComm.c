@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include "misc.h"
-
+#include <stdio.h>
 
 static uint8_t readDn(PiComm* self){ return (self->DNPIN)->read(self->DNPIN); }
 
@@ -18,11 +18,11 @@ static uint8_t readDn(PiComm* self){ return (self->DNPIN)->read(self->DNPIN); }
 static void writeSingle(PiComm* self){
 	self->setEnLow(self);
 
-	delayMicrosecondsHard(500000);
+	//delayMicrosecondsHard(500000);
 
 	while(!self->readDn(self)) {;}
 
-	delayMicrosecondsHard(500000);
+	//delayMicrosecondsHard(500000);
 
 	uint8_t i;
 	uint8_t bit;
@@ -38,11 +38,11 @@ static void writeSingle(PiComm* self){
 
 	self->setEnHigh(self);
 
-	delayMicrosecondsHard(500000);
+	//delayMicrosecondsHard(500000);
 
 	while (self->readDn(self)) {;}
 	
-	delayMicrosecondsHard(500000);
+	//delayMicrosecondsHard(500000);
 }
 
 
@@ -63,7 +63,22 @@ static void setEnHigh(PiComm* self){ (self->ENPIN)->writeHigh(self->ENPIN); }
 
 static void setEnLow(PiComm* self){ (self->ENPIN)->writeLow(self->ENPIN); }
 
-
+static void setData(PiComm* self, int16_t* rots){
+	uint8_t left;
+	uint8_t right;
+	
+	uint16_t unsig;
+	
+	uint8_t i;
+	
+	for (i = 0; i < (self->numCycles)/2; i++){ 
+		unsig = (uint16_t) rots[i];
+		left = (uint8_t) ((rots[i] >> 8) & 0x00FF);
+		right = (uint8_t) (rots[i] & 0x00FF);
+		self->DATA[2*i] = left;
+		self->DATA[(2*i)+1] = right;
+	}
+}
 
 PiComm* createPiComm(PiGPIO* ENPIN, PiGPIO* DNPIN, PiGPIO** DATPORT, uint8_t numCycles, uint8_t* DATA){
 	PiComm* cbus = (PiComm*) malloc(sizeof(PiComm));
@@ -75,7 +90,7 @@ PiComm* createPiComm(PiGPIO* ENPIN, PiGPIO* DNPIN, PiGPIO** DATPORT, uint8_t num
 
 	*cbus = (PiComm){ .ENPIN=ENPIN, .DNPIN=DNPIN,
 		.DATPORT=DATPORT, .numCycles=numCycles,
-		.setEnHigh=setEnHigh, .setEnLow=setEnLow,
+		.setEnHigh=setEnHigh, .setEnLow=setEnLow, .setData=setData,
 		.writeSingle=writeSingle, .writeCycle=writeCycle,
 		.readDn=readDn, .DATASINGLE=0, .DATA=DATA };
 
