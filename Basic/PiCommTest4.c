@@ -1,8 +1,8 @@
 /*
- * PiCommTest3.c
+ * PiCommTest4.c
  *
- * Created: 14-Feb-2020
- * Last Modified: 14-Feb-2020
+ * Created: 15-Feb-2020
+ * Last Modified: 15-Feb-2020
  * Author : tejas_advait
  */
 
@@ -26,13 +26,13 @@ int main(){
 
 	PiGPIO* DATPORT[8] = {DP0, DP1, DP2, DP3, DP4, DP5, DP6, DP7};
 
-	uint8_t numCycles = 4;
+	uint8_t numCycles = 2;
 
 	uint8_t DATA[numCycles];
 
 	uint8_t i;
 	
-	int16_t rots[2] = {400, -200};
+	int16_t rots[1] = {400};
 	
 	//DATA[0] = 0x01;
 	//DATA[1] = 0x90;
@@ -44,7 +44,7 @@ int main(){
 	
 	comm->setData(comm, rots);
 	
-	for (i = 0; i<5; i++){
+	for (i = 0; i<10; i++){
 		comm->writeCycle(comm);
 		ENPIN->writeLow(ENPIN);
 	}
