@@ -1,8 +1,11 @@
 /*
  * PiGPIO.c
  *
- * Created: 12-Feb-20 10:00:12 AM
- * Author : ta275
+ * Created: 12-Feb-20
+ * Last Modified: 23-Feb-2020
+ * Author: tejas_advait
+ *
+ * Description: Source code for PiGPIO.h.
  */ 
 
 

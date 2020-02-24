@@ -1,3 +1,15 @@
+/*
+ * misc.c
+ *
+ * Created: 14-Feb-2020
+ * Last Modified: 23-Feb-2020
+ * Author: tejas_advait
+ *
+ * Description: Source code for misc.h.
+ */
+
+
+#include <stdlib.h>
 #include <sys/time.h>
 
 void delayMicrosecondsHard (unsigned int howLong)

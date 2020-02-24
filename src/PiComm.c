@@ -2,27 +2,25 @@
  * PiComm.c
  *
  * Created: 14-Feb-2020
- * Last Modified: 14-Feb-2020
+ * Last Modified: 23-Feb-2020
  * Author : tejas_advait
+ *
+ * Description: Source code for PiComm.h.
  */
 
 #include "PiComm.h"
 #include <stdlib.h>
 #include <stdint.h>
-#include "misc.h"
 #include <stdio.h>
 
 static uint8_t readDn(PiComm* self){ return (self->DNPIN)->read(self->DNPIN); }
 
 
 static void writeSingle(PiComm* self){
+	
 	self->setEnLow(self);
 
-	//delayMicrosecondsHard(500000);
-
 	while(!self->readDn(self)) {;}
-
-	//delayMicrosecondsHard(500000);
 
 	uint8_t i;
 	uint8_t bit;
@@ -38,17 +36,13 @@ static void writeSingle(PiComm* self){
 
 	self->setEnHigh(self);
 
-	//delayMicrosecondsHard(500000);
-
 	while (self->readDn(self)) {;}
 	
-	//delayMicrosecondsHard(500000);
 }
 
 
 
 static void writeCycle(PiComm* self){ 
-	// assert(self->isDat(self) == 1);
 
 	uint8_t i;
 
@@ -67,12 +61,10 @@ static void setData(PiComm* self, int16_t* rots){
 	uint8_t left;
 	uint8_t right;
 	
-	uint16_t unsig;
-	
 	uint8_t i;
 	
-	for (i = 0; i < (self->numCycles)/2; i++){ 
-		unsig = (uint16_t) rots[i];
+	for (i = 0; i < (self->numCycles)/2; i++){
+
 		left = (uint8_t) ((rots[i] >> 8) & 0x00FF);
 		right = (uint8_t) (rots[i] & 0x00FF);
 		self->DATA[2*i] = left;
