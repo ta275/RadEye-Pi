@@ -26,7 +26,7 @@ int main(){
 
 	PiGPIO* DATPORT[8] = {DP0, DP1, DP2, DP3, DP4, DP5, DP6, DP7};
 
-	uint8_t numCycles = 4;
+	uint8_t numCycles = 2;
 
 	uint8_t DATA[numCycles];
 
@@ -38,9 +38,9 @@ int main(){
 	
 	comm->setData(comm, rots);
 	
-	for (i = 0; i<5; i++){
+	for (i = 0; i<1; i++){
 		comm->writeCycle(comm);
-		//ENPIN->writeLow(ENPIN);
+		ENPIN->writeLow(ENPIN);
 	}
 	return 0;
 }

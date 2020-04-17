@@ -26,7 +26,7 @@ struct EyeManual{
 
 	// EyeManual(int16_t steps_per_rot, uint8_t numFracs, uint8_t* Fracs, PiComm* comm );
 
-	EyeManual(int16_t steps_per_rot, uint8_t numFracs, uint8_t* Fracs);
+	EyeManual(int16_t steps_per_rot, uint8_t numFracs, uint8_t* Fracs, PiComm* comm);
 	void start();
 	void setRots(float angle_a, float angle_b);
 	void sendTouC();

@@ -44,7 +44,7 @@ int main(){
 	
 	comm->setData(comm, rots);
 	
-	for (i = 0; i<5; i++){
+	for (i = 0; i<1; i++){
 		comm->writeCycle(comm);
 		ENPIN->writeLow(ENPIN);
 	}
