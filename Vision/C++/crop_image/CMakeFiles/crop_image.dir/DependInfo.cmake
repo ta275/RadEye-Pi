@@ -4,13 +4,13 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/trex98/Misc/RadEye-Pi/Vision/C++/crop_image/crop_image.cpp" "/home/trex98/Misc/RadEye-Pi/Vision/C++/crop_image/CMakeFiles/crop_image.dir/crop_image.cpp.o"
+  "/home/pi/Code/SFML/RadEye-Pi/RadEye-Pi/Vision/C++/crop_image/crop_image.cpp" "/home/pi/Code/SFML/RadEye-Pi/RadEye-Pi/Vision/C++/crop_image/CMakeFiles/crop_image.dir/crop_image.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "/usr/local/include/opencv4"
+  "/opt/opencv-4.1.0/include/opencv4"
   )
 
 # Targets to which this target links.

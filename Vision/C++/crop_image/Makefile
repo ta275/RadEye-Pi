@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/trex98/Misc/RadEye-Pi/Vision/C++/crop_image
+CMAKE_SOURCE_DIR = /home/pi/Code/SFML/RadEye-Pi/RadEye-Pi/Vision/C++/crop_image
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/trex98/Misc/RadEye-Pi/Vision/C++/crop_image
+CMAKE_BINARY_DIR = /home/pi/Code/SFML/RadEye-Pi/RadEye-Pi/Vision/C++/crop_image
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/trex98/Misc/RadEye-Pi/Vision/C++/crop_image/CMakeFiles /home/trex98/Misc/RadEye-Pi/Vision/C++/crop_image/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pi/Code/SFML/RadEye-Pi/RadEye-Pi/Vision/C++/crop_image/CMakeFiles /home/pi/Code/SFML/RadEye-Pi/RadEye-Pi/Vision/C++/crop_image/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/trex98/Misc/RadEye-Pi/Vision/C++/crop_image/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pi/Code/SFML/RadEye-Pi/RadEye-Pi/Vision/C++/crop_image/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
