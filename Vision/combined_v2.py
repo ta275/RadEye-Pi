@@ -3,10 +3,10 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 #Image Read
-image = cv.imread('Test_Images/V2/img1.jpeg')
+image = cv.imread('Test_Images/V2/img2.jpeg')
 
 h_pix, w_pix, _ = image.shape
-
+print (w_pix, h_pix)
 screen_h_mm, screen_w_mm = 181, 268
 
 

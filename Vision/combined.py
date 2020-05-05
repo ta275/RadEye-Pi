@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 #Image Read
-image = cv.imread('Test_Images/V2/img1.jpeg')
+image = cv.imread('Test_Images/V2/img2.jpeg')
 
 h_pix, w_pix, _ = image.shape
 
@@ -17,7 +17,8 @@ screen_h_mm, screen_w_mm = 181, 268
 #Image Crop
 
 #Tune these parameters
-ratio_topl = [0.05, 0.01]
+# ratio_topl = [0.05, 0.01]
+ratio_topl = [0.00, 0.00]
 ratio_botr = [0.95, 0.95]
 
 topl = [int(h_pix*ratio_topl[0]), int(w_pix*ratio_topl[1])]
@@ -158,10 +159,10 @@ botl_box = gray[-1*box_dim[0]:, :box_dim[1]]
 corners = [cv.goodFeaturesToTrack(topl_box,1,0.1,100)[0], cv.goodFeaturesToTrack(topr_box,1,0.1,100)[0],
 cv.goodFeaturesToTrack(botr_box,1,0.1,100)[0], cv.goodFeaturesToTrack(botl_box,1,0.1,100)[0]]
 
-# cv.imshow("topl", topl_box)
-# cv.imshow("topr", topr_box)
-# cv.imshow("botr", botr_box)
-# cv.imshow("botl", botl_box)
+cv.imshow("topl", topl_box)
+cv.imshow("topr", topr_box)
+cv.imshow("botr", botr_box)
+cv.imshow("botl", botl_box)
 
 corners = np.int0(corners)
 coord = []
@@ -198,10 +199,10 @@ cv.imshow("Corners", cropped_image)
 
 
 
-#Estimate Blob coordinate
-b_coord = np.array([[pointer.pt[0]], [pointer.pt[1]]], dtype="float32")
-final = np.matmul(M, b_coord)
-print (final)
+# #Estimate Blob coordinate
+# b_coord = np.array([[pointer.pt[0]], [pointer.pt[1]]], dtype="float32")
+# final = np.matmul(M, b_coord)
+# print (final)
 
 
 if cv.waitKey(0) & 0xff == 27:

@@ -1,0 +1,3 @@
+/home/trex98/Misc/RadEye-Pi/Vision/C++/crop_image/CMakeFiles/rebuild_cache.dir
+/home/trex98/Misc/RadEye-Pi/Vision/C++/crop_image/CMakeFiles/crop_image.dir
+/home/trex98/Misc/RadEye-Pi/Vision/C++/crop_image/CMakeFiles/edit_cache.dir
