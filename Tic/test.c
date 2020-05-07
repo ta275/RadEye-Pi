@@ -1,5 +1,6 @@
-#include <stdlib.h>
 #include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 
 // Runs the given shell command.  Returns 0 on success, -1 on failure.
