@@ -1,6 +1,6 @@
 #include "TicDriver.h"
 
-
+#include <unistd.h>
 int main()
 {
 	const char vertical_sno [9] = "00295780";
