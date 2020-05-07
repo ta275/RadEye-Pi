@@ -64,6 +64,13 @@ static int setStepMode(const char* sno, uint8_t val)
 	return run_command(command);
 }
 
+int tic_energize(const char* sno)
+{
+	char command[1024];
+	snprintf(command, sizeof(command), "ticcmd -d %s --energize %d", sno);
+	return run_command(command);
+}
+
 int tic_set_target_position(const char* sno, int32_t target)
 {
   char command[1024];
@@ -87,6 +94,8 @@ int main()
 	int result2 = setStepMode(horizontal_sno, 0);
 	halt_and_set_position(vertical_sno, 0);
 	halt_and_set_position(horizontal_sno, 0);
+	tic_energize(vertical_sno);
+	tic_energize(horizontal_sno);
 
 
 	tic_set_target_position(vertical_sno, 81);
