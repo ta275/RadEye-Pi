@@ -1,3 +1,0 @@
-/home/trex98/Misc/RadEye-Pi/Vision/C++/four_corners/CMakeFiles/rebuild_cache.dir
-/home/trex98/Misc/RadEye-Pi/Vision/C++/four_corners/CMakeFiles/four_corners.dir
-/home/trex98/Misc/RadEye-Pi/Vision/C++/four_corners/CMakeFiles/edit_cache.dir

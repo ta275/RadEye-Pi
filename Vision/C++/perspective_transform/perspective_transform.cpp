@@ -45,8 +45,9 @@ int main( int argc, char** argv )
     cvtColor(image, gray, COLOR_BGR2GRAY);
 
     //update crop values here
-    float topl_crop [2] = {0.03, 0.04};
-    float botr_crop [2] = {0.92, 0.98};
+    float topl_crop [2] = {0.16, 0.1};
+    float botr_crop [2] = {0.96, 0.97};
+
 
     int range[2][2];
     range[0][0] = (int) image.rows*topl_crop[0];
@@ -58,7 +59,7 @@ int main( int argc, char** argv )
 
 
     //default values of box ratio
-    float box_ratio[2] = {0.15, 0.1};
+    float box_ratio[2] = {0.1, 0.1};
 
     int box_dim [2];
     box_dim[0] = (int) croppedImg.rows*box_ratio[0];
@@ -112,11 +113,11 @@ int main( int argc, char** argv )
     // imshow( "Grayscale Image", gray );                   // Show our image inside it.
 
 
-    namedWindow( "Cropped Image With Corners", WINDOW_AUTOSIZE); // Create a window for display.
-    imshow( "Cropped Image With Corners", croppedImg );                   // Show our image inside it.
+    // namedWindow( "Cropped Image With Corners", WINDOW_AUTOSIZE); // Create a window for display.
+    // imshow( "Cropped Image With Corners", croppedImg );                   // Show our image inside it.
 
-    namedWindow( "Warped Image", WINDOW_AUTOSIZE); // Create a window for display.
-    imshow( "Warped Image", warped );
+    // namedWindow( "Warped Image", WINDOW_AUTOSIZE); // Create a window for display.
+    // imshow( "Warped Image", warped );
 
     // namedWindow( "Top Left Box", WINDOW_NORMAL ); 
     // imshow( "Top Left Box", topl_box );    
@@ -130,6 +131,8 @@ int main( int argc, char** argv )
     // namedWindow( "Bottom Left Box", WINDOW_NORMAL );
     // imshow("Bottom Left Box", botl_box);
 
-    waitKey(0);                                          // Wait for a keystroke in the window
+    // waitKey(0);                                          // Wait for a keystroke in the window
+    imwrite("warped.jpeg", warped);
+    imwrite("croppedWcorners.jpeg", croppedImg);
     return 0;
 }

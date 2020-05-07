@@ -1,3 +1,0 @@
-/home/pi/Code/SFML/RadEye-Pi/RadEye-Pi/Vision/C++/crop_image/CMakeFiles/rebuild_cache.dir
-/home/pi/Code/SFML/RadEye-Pi/RadEye-Pi/Vision/C++/crop_image/CMakeFiles/crop_image.dir
-/home/pi/Code/SFML/RadEye-Pi/RadEye-Pi/Vision/C++/crop_image/CMakeFiles/edit_cache.dir

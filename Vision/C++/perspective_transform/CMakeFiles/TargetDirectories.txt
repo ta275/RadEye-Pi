@@ -1,3 +1,0 @@
-/home/trex98/Misc/RadEye-Pi/Vision/C++/perspective_transform/CMakeFiles/rebuild_cache.dir
-/home/trex98/Misc/RadEye-Pi/Vision/C++/perspective_transform/CMakeFiles/perspective_transform.dir
-/home/trex98/Misc/RadEye-Pi/Vision/C++/perspective_transform/CMakeFiles/edit_cache.dir

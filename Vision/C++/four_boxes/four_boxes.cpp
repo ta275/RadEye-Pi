@@ -23,8 +23,8 @@ int main( int argc, char** argv )
     }
 
     //update crop values here
-    float topl_crop [2] = {0.03, 0.04};
-    float botr_crop [2] = {0.92, 0.98};
+    float topl_crop [2] = {0.16, 0.1};
+    float botr_crop [2] = {0.96, 0.97};
 
     int range[2][2];
     range[0][0] = (int) image.rows*topl_crop[0];
@@ -36,7 +36,7 @@ int main( int argc, char** argv )
 
 
     //default values of box ratio
-    float box_ratio[2] = {0.15, 0.1};
+    float box_ratio[2] = {0.1, 0.1};
 
     box_ratio[0] = stof(argv[2]);
     box_ratio[1] = stof(argv[3]);
@@ -54,24 +54,31 @@ int main( int argc, char** argv )
     // cout << "Topl number of rows " << topl_box.rows << endl;
     // cout << "box dim  " << box_dim[0] << endl;
 
-    namedWindow( "Original Image", WINDOW_AUTOSIZE); // Create a window for display.
-    imshow( "Original Image", image );                   // Show our image inside it.
+    // namedWindow( "Original Image", WINDOW_AUTOSIZE); // Create a window for display.
+    // imshow( "Original Image", image );                   // Show our image inside it.
 
-    namedWindow( "Cropped Image", WINDOW_AUTOSIZE); // Create a window for display.
-    imshow( "Cropped Image", croppedImg );                   // Show our image inside it.
+    // namedWindow( "Cropped Image", WINDOW_AUTOSIZE); // Create a window for display.
+    // imshow( "Cropped Image", croppedImg );                   // Show our image inside it.
 
-    namedWindow( "Top Left Box", WINDOW_NORMAL ); 
-    imshow( "Top Left Box", topl_box );    
+    // namedWindow( "Top Left Box", WINDOW_NORMAL ); 
+    // imshow( "Top Left Box", topl_box );    
 
-    namedWindow( "Top Right Box", WINDOW_NORMAL );
-    imshow("Top Right Box", topr_box);
+    // namedWindow( "Top Right Box", WINDOW_NORMAL );
+    // imshow("Top Right Box", topr_box);
     
-    namedWindow( "Bottom Right Box", WINDOW_NORMAL );
-    imshow("Bottom Right Box", botr_box);
+    // namedWindow( "Bottom Right Box", WINDOW_NORMAL );
+    // imshow("Bottom Right Box", botr_box);
     
-    namedWindow( "Bottom Left Box", WINDOW_NORMAL );
-    imshow("Bottom Left Box", botl_box);
+    // namedWindow( "Bottom Left Box", WINDOW_NORMAL );
+    // imshow("Bottom Left Box", botl_box);
 
-    waitKey(0);                                          // Wait for a keystroke in the window
+    // waitKey(0);                                          // Wait for a keystroke in the window
+
+    imwrite("croppedImg.jpeg", croppedImg);
+    imwrite("topl_box.jpeg", topl_box);
+    imwrite("topr_box.jpeg", topr_box);
+    imwrite("botr_box.jpeg", botr_box);
+    imwrite("botl_box.jpeg", botl_box);
+
     return 0;
 }

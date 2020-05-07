@@ -23,8 +23,8 @@ int main( int argc, char** argv )
     }
 
     //default values
-    float topl_crop [2] = {0.03, 0.04};
-    float botr_crop [2] = {0.92, 0.98};
+    float topl_crop [2] = {0.16, 0.1};
+    float botr_crop [2] = {0.96, 0.97};
 
     topl_crop[0] = stof(argv[2]);
     topl_crop[1] = stof(argv[3]);
@@ -38,11 +38,13 @@ int main( int argc, char** argv )
     range[1][1] = (int) image.cols*botr_crop[1];
 
     Mat croppedImg = image(Range(range[0][0],range[0][1]), Range(range[1][0], range[1][1]));
-    namedWindow( "Original Image", WINDOW_AUTOSIZE );     // Create a window for display.
-    imshow( "Original Image", image );                   // Show our image inside it.
+    // namedWindow( "Original Image", WINDOW_AUTOSIZE );     // Create a window for display.
+    // imshow( "Original Image", image );                   // Show our image inside it.
 
-    imshow( "Cropped image", croppedImg );    
-
-    waitKey(0);                                          // Wait for a keystroke in the window
+    // imshow( "Cropped image", croppedImg );
+    // imwrite("croppedImg.jpeg", croppedImg);    
+    // waitKey(0);                                          // Wait for a keystroke in the window
+    
+    imwrite("croppedImg.jpeg", croppedImg); 
     return 0;
 }
