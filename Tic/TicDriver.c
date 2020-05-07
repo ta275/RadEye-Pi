@@ -9,6 +9,7 @@
 
 #include "TicDriver.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include <stdint.h>
 // #include <string>
 
@@ -67,8 +68,17 @@ static int setStepMode(TicDriver* self, uint8_t val)
 			return -1;
 			break;
 	}
-	snprintf(command, sizeof(command), "ticcmd --step-mode %s", mode);
+	snprintf(command, sizeof(command), "ticcmd -d %d --step-mode %s", self->serial_no, mode);
 	return run_command(command);
+}
+
+static int setCurrentLimit(TicDriver* self, uint8_t val)
+{
+	self->current_limit = val;
+	char command[1024];
+	snprintf(command, sizeof(command), "ticcmd -d %d --current %d", self->serial_no, val);
+	return run_command(command);
+
 }
 static void setDir( BED* self, uint8_t dir){
 	if (dir == 0x01) (self->DIR)->writeHigh(self->DIR);
