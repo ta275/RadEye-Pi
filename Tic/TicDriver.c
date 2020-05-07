@@ -152,7 +152,7 @@ static int steps(TicDriver* self, int32_t val){
 
 
 
-TicDriver* createTicDriver(const char* serial_no, uint32_t max_speed, 
+TicDriver* createTicDriver(char* serial_no, uint32_t max_speed, 
 	uint32_t starting_speed, uint32_t max_decel, uint32_t max_accel, 
 	uint8_t step_mode, uint16_t current_limit, int32_t curr_pos)
 {
