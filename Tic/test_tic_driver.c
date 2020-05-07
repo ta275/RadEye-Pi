@@ -25,5 +25,6 @@ int main()
 
 	sleep(2);
 	vertical->steps(vertical, -81);
+	vertical->deenergize(vertical);
 
 }
