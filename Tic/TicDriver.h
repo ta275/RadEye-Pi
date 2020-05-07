@@ -12,38 +12,10 @@
 #include <stdio.h>
 #include <stdlib.h>
  
-// Runs the given shell command.  Returns 0 on success, -1 on failure.
-int run_command(const char * command)
-{
-  int result = system(command);
-  if (result)
-  {
-    fprintf(stderr, "Command failed with code %d: %s\n", result, command);
-    return -1;
-  }
-  return 0;
-}
- 
-// Sets the target position, returning 0 on success and -1 on failure.
-int tic_set_target_position(int32_t target)
-{
-  char command[1024];
-  snprintf(command, sizeof(command), "ticcmd --exit-safe-start --position %d", target);
-  return run_command(command);
-}
- 
-int main()
-{
-  printf("Setting target position to 800.\n");
-  int result = tic_set_target_position(800);
-  if (result) { return 1; }
-  return 0;
-}
-
 typedef struct  TicDriver{
 	
 	char[9] serial_no;
-	
+
 	uint32_t max_speed;
 	uint32_t starting_speed;
 	uint32_t max_decel;
@@ -63,7 +35,7 @@ typedef struct  TicDriver{
 
 	int (*setStepMode)(struct TicDriver*, uint8_t val);	/// Set step mode
 
-	int (*setCurrentLimit)(struct TicDriver*, uint16_T val);
+	int (*setCurrentLimit)(struct TicDriver*, uint16_t val);
 
 	int (*setTargetPos)(struct TicDriver*, int32_t val);
 
@@ -88,4 +60,4 @@ TicDriver* createTicDriver(const char* serial_no, uint32_t max_speed, uint32_t s
 
 TicDriver* copyTicDriver(TicDriver const* in);
 
-void TicDriver(TicDriver* in);
+void freeTicDriver(TicDriver* in);

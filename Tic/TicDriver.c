@@ -107,7 +107,7 @@ static int setTargetPos(TicDriver* self, int32_t val)
 	return result;
 }
 
-static int setCurrPos(TicDriver* self, int32_val)
+static int setCurrPos(TicDriver* self, int32_t val)
 {
 	char command[1024];
 	snprintf(command, sizeof(command), "ticcmd -d %s --halt-and-set-position %d  ", self->serial_no, val);
