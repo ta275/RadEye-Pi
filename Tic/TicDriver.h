@@ -14,7 +14,7 @@
  
 typedef struct  TicDriver{
 	
-	char[9] serial_no;
+	char serial_no[9];
 
 	uint32_t max_speed;
 	uint32_t starting_speed;
