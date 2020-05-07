@@ -67,7 +67,7 @@ static int setStepMode(const char* sno, uint8_t val)
 int tic_energize(const char* sno)
 {
 	char command[1024];
-	snprintf(command, sizeof(command), "ticcmd -d %s --energize %d", sno);
+	snprintf(command, sizeof(command), "ticcmd -d %s --energize", sno);
 	return run_command(command);
 }
 
