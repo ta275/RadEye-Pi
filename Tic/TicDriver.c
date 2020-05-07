@@ -152,7 +152,7 @@ static int steps(TicDriver* self, int32_t val){
 
 
 
-TicDriver* createTicDriver(char* serial_no, uint32_t max_speed, 
+TicDriver* createTicDriver(const char* serial_no, uint32_t max_speed, 
 	uint32_t starting_speed, uint32_t max_decel, uint32_t max_accel, 
 	uint8_t step_mode, uint16_t current_limit, int32_t curr_pos)
 {
@@ -164,7 +164,7 @@ TicDriver* createTicDriver(char* serial_no, uint32_t max_speed,
 	;
 	}
 
-	*driver = (TicDriver){.serial_no=serial_no,
+	*driver = (TicDriver){
 						  .max_speed=max_speed, .starting_speed=starting_speed, 
 						  .max_decel=max_decel, .max_accel=max_accel,
 						  .step_mode=step_mode, .current_limit=current_limit,
@@ -177,6 +177,7 @@ TicDriver* createTicDriver(char* serial_no, uint32_t max_speed,
 						  .setMaxSpeed=setMaxSpeed, .steps=steps
 						};
 
+	snprintf(driver->serial_no, sizeof(driver->serial_no), serial_no);
 	driver->deenergize(driver);
 	driver->setMaxSpeed(driver,max_speed);
 	driver->setStartingSpeed(driver,starting_speed);
