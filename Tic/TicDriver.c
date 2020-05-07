@@ -11,7 +11,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
-// #include <string>
 
 
 // Runs the given shell command.  Returns 0 on success, -1 on failure.
@@ -68,7 +67,7 @@ static int setStepMode(TicDriver* self, uint8_t val)
 			return -1;
 			break;
 	}
-	snprintf(command, sizeof(command), "ticcmd -d %d --step-mode %s", self->serial_no, mode);
+	snprintf(command, sizeof(command), "ticcmd -d %s --step-mode %s", self->serial_no, mode);
 	return run_command(command);
 }
 
@@ -76,10 +75,11 @@ static int setCurrentLimit(TicDriver* self, uint8_t val)
 {
 	self->current_limit = val;
 	char command[1024];
-	snprintf(command, sizeof(command), "ticcmd -d %d --current %d", self->serial_no, val);
+	snprintf(command, sizeof(command), "ticcmd -d %s --current %d", self->serial_no, val);
 	return run_command(command);
-
 }
+
+int (*setTargetPos)(struct TicDriver*, int32_t val);
 static void setDir( BED* self, uint8_t dir){
 	if (dir == 0x01) (self->DIR)->writeHigh(self->DIR);
 	if (dir == 0x00) (self->DIR)->writeLow(self->DIR);

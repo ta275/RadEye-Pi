@@ -18,7 +18,7 @@ int run_command(const char * command)
 
 
 
-static int setStepMode(uint32_t sno, uint8_t val)
+static int setStepMode(const char* sno, uint8_t val)
 {
 	// self->step_mode = val;
 	char command[1024];
@@ -60,28 +60,28 @@ static int setStepMode(uint32_t sno, uint8_t val)
 			return -1;
 			break;
 	}
-	snprintf(command, sizeof(command), "ticcmd -d %d --step-mode %s",sno, mode);
+	snprintf(command, sizeof(command), "ticcmd -d %s --step-mode %s",sno, mode);
 	return run_command(command);
 }
 
-int tic_set_target_position(uint32_t sno, int32_t target)
+int tic_set_target_position(const char* sno, int32_t target)
 {
   char command[1024];
-  snprintf(command, sizeof(command), "ticcmd --exit-safe-start -d %d --position %d", sno, target);
+  snprintf(command, sizeof(command), "ticcmd --exit-safe-start -d %s --position %d", sno, target);
   return run_command(command);
 }
 
-int halt_and_set_position(uint32_t sno, int32_t pos)
+int halt_and_set_position(const char* sno, int32_t pos)
 {
   char command[1024];
-  snprintf(command, sizeof(command), "ticcmd -d %d --halt-and-set-position %d  ", sno, pos);
+  snprintf(command, sizeof(command), "ticcmd -d %s --halt-and-set-position %d  ", sno, pos);
   return run_command(command);
 }
 
 int main()
 {
-	uint32_t vertical_sno = 00295780;
-	uint32_t horizontal_sno = 00286960;
+	const char vertical_sno [9] = "00295780";
+	const char horizontal_sno [9] = "00286960";
 	printf("Setting step mode to 1.\n");
 	int result1 = setStepMode(vertical_sno, 0);
 	int result2 = setStepMode(horizontal_sno, 0);

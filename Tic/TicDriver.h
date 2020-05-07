@@ -42,7 +42,7 @@ int main()
 
 typedef struct  TicDriver{
 
-	uint32_t serial_no;
+	char[9] serial_no;
 	
 	uint32_t max_speed;
 	uint32_t starting_speed;
