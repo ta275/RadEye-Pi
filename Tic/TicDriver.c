@@ -147,7 +147,7 @@ static int setMaxSpeed(TicDriver* self, uint32_t val)
 
 static int step (TicDriver* self, int32_t dir,unsigned int delay)
 {
-	result = self->setTargetPos(self, self->curr_pos + dir);
+	int result = self->setTargetPos(self, self->curr_pos + dir);
 	delayMicrosecondsHard(delay);
 	return result;
 }
@@ -158,7 +158,7 @@ static int steps(TicDriver* self, int32_t val){
 	{
 		for (int i = 0; i < val; i++)
 		{
-			result += step(self, 1, 100);
+			result += step(self, 1, 1);
 		}
 	}
 
@@ -166,7 +166,7 @@ static int steps(TicDriver* self, int32_t val){
 	{
 		for (int i = 0; i < (val*-1); i++)
 		{
-			result += step(self,-1,100);
+			result += step(self,-1,1);
 		}
 	}
 	// return self->setTargetPos(self, self->curr_pos + val);
