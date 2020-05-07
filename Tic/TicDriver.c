@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
+#include "misc.h"
 
 
 // Runs the given shell command.  Returns 0 on success, -1 on failure.
@@ -143,10 +144,34 @@ static int setMaxSpeed(TicDriver* self, uint32_t val)
 	return run_command(command);
 }
 
+
+static int step (TicDriver* self, int32_t dir,unsigned int delay)
+{
+	result = self->setTargetPos(self, self->curr_pos + dir);
+	delayMicrosecondsHard(delay);
+	return result;
+}
 static int steps(TicDriver* self, int32_t val){
 
-	return self->setTargetPos(self, self->curr_pos + val);
-	
+	int result;
+	if (val >= 0 )
+	{
+		for (int i = 0; i < val; i++)
+		{
+			result += step(self, 1, 100);
+		}
+	}
+
+	if (val < 0)
+	{
+		for (int i = 0; i < (val*-1); i++)
+		{
+			result += step(self,-1,100);
+		}
+	}
+	// return self->setTargetPos(self, self->curr_pos + val);
+	if (result != 0) {return -1;}
+	return 0;
 }
 
 
