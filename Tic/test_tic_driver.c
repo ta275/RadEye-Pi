@@ -8,7 +8,7 @@ int main()
 	const char horizontal_sno [9] = "00286960";
 
 
-	uint8_t step_mode = 1;
+	uint8_t step_mode = 0;
 
 	uint32_t max_speed = 2000000 * (step_mode+1);
 	uint32_t starting_speed = 0;
