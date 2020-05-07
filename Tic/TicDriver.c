@@ -100,7 +100,7 @@ static int setTargetPos(TicDriver* self, int32_t val)
 	char command[1024];
 	snprintf(command, sizeof(command), "ticcmd --exit-safe-start -d %s --position %d", self->serial_no, val);
 	int result = run_command(command);
-	if (result)
+	if (result == 0)
 	{
 		self->curr_pos = val;
 	}
