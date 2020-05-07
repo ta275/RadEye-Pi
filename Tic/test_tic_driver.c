@@ -22,5 +22,8 @@ int main()
 	 max_decel, max_accel, step_mode, current_limit, curr_pos);
 
 	vertical->steps(vertical, 81);
-	
+
+	sleep(1);
+	vertical->steps(vertical, -81);
+
 }
