@@ -85,7 +85,7 @@ static int setStepMode(TicDriver* self, uint8_t val)
 	return run_command(command);
 }
 
-static int setCurrentLimit(TicDriver* self, uint8_t val)
+static int setCurrentLimit(TicDriver* self, uint16_t val)
 {
 	self->current_limit = val;
 	char command[1024];
@@ -98,8 +98,8 @@ static int setTargetPos(TicDriver* self, int32_t val)
 	self->target_pos = val;
 	if (!self->isEnergized) { self->energize(self); }
 	char command[1024];
-	snprintf(command, sizeof(command), "ticcmd --exit-safe-start -d %s --position %d", self->serial_no, target);
-	result = run_command(command);
+	snprintf(command, sizeof(command), "ticcmd --exit-safe-start -d %s --position %d", self->serial_no, val);
+	int result = run_command(command);
 	if (result)
 	{
 		self->curr_pos = val;
@@ -122,21 +122,21 @@ static int setMaxDecel(TicDriver* self, uint32_t val)
 	return run_command(command);
 }
 
-int setMaxAccel(TicDriver* self, uint32_t val)
+static int setMaxAccel(TicDriver* self, uint32_t val)
 {
 	char command[1024];
 	snprintf(command, sizeof(command), "ticcmd -d %s --max-accel %d  ", self->serial_no, val);
 	return run_command(command);
 }
 
-int setStartingSpeed(TicDriver* self, uint32_t val)
+static int setStartingSpeed(TicDriver* self, uint32_t val)
 {
 	char command[1024];
 	snprintf(command, sizeof(command), "ticcmd -d %s --starting-speed %d  ", self->serial_no, val);
 	return run_command(command);
 }
 
-int setMaxSpeed(TicDriver* self, uint32_t val)
+static int setMaxSpeed(TicDriver* self, uint32_t val)
 {
 	char command[1024];
 	snprintf(command, sizeof(command), "ticcmd -d %s --max-speed %d  ", self->serial_no, val);
@@ -164,7 +164,7 @@ TicDriver* createTicDriver(const char* serial_no, uint32_t max_speed,
 	;
 	}
 
-	*driver = (TicDriver){.serial_no = serial_no,
+	*driver = (TicDriver){.serial_no=serial_no,
 						  .max_speed=max_speed, .starting_speed=starting_speed, 
 						  .max_decel=max_decel, .max_accel=max_accel,
 						  .step_mode=step_mode, .current_limit=current_limit,
