@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "misc.h"
+#include <tic.h>
 
 
 // Runs the given shell command.  Returns 0 on success, -1 on failure.
@@ -145,35 +146,40 @@ static int setMaxSpeed(TicDriver* self, uint32_t val)
 }
 
 
-static int step (TicDriver* self, int32_t dir,unsigned int delay)
+// static int step (TicDriver* self, int32_t dir,unsigned int delay)
+// {
+// 	int result = self->setTargetPos(self, self->curr_pos + dir);
+// 	delayMicrosecondsHard(delay);
+// 	return result;
+// }
+// static int steps(TicDriver* self, int32_t val){
+
+// 	int result;
+// 	if (val >= 0 )
+// 	{
+// 		for (int i = 0; i < val; i++)
+// 		{
+// 			result += step(self, 1, 1);
+// 		}
+// 	}
+
+// 	if (val < 0)
+// 	{
+// 		for (int i = 0; i < (val*-1); i++)
+// 		{
+// 			result += step(self,-1,1);
+// 		}
+// 	}
+// 	// return self->setTargetPos(self, self->curr_pos + val);
+// 	if (result != 0) {return -1;}
+// 	return 0;
+// }
+static int steps (TicDriver* self, int32_t val)
 {
 	int result = self->setTargetPos(self, self->curr_pos + dir);
-	delayMicrosecondsHard(delay);
+	delayMicrosecondsHard(100);
 	return result;
 }
-static int steps(TicDriver* self, int32_t val){
-
-	int result;
-	if (val >= 0 )
-	{
-		for (int i = 0; i < val; i++)
-		{
-			result += step(self, 1, 1);
-		}
-	}
-
-	if (val < 0)
-	{
-		for (int i = 0; i < (val*-1); i++)
-		{
-			result += step(self,-1,1);
-		}
-	}
-	// return self->setTargetPos(self, self->curr_pos + val);
-	if (result != 0) {return -1;}
-	return 0;
-}
-
 
 
 
