@@ -41,7 +41,7 @@ int main()
 }
 
 typedef struct  TicDriver{
-
+	
 	char[9] serial_no;
 	
 	uint32_t max_speed;
@@ -55,6 +55,11 @@ typedef struct  TicDriver{
 	int32_t curr_pos;
 	int32_t target_pos;
 
+	uint8_t isEnergized;
+
+	int (*energize)(struct TicDriver*);
+
+	int (*deenergize)(struct TicDriver*);
 
 	int (*setStepMode)(struct TicDriver*, uint8_t val);	/// Set step mode
 
@@ -72,12 +77,14 @@ typedef struct  TicDriver{
 
 	int (*setMaxSpeed)(struct TicDriver*, uint32_t val);
 
+	int (*steps) (struct TicDriver*, int32_t val);
+
 
 
 } TicDriver;
 
 
-TicDriver* createTicDriver(	uint32_t serial_no, uint32_t max_speed, uint32_t starting_speed, uint32_t max_decel, uint32_t max_accel, uint8_t step_mode, uint16_t current_limit, int32_t curr_pos);
+TicDriver* createTicDriver(const char* serial_no, uint32_t max_speed, uint32_t starting_speed, uint32_t max_decel, uint32_t max_accel, uint8_t step_mode, uint16_t current_limit, int32_t curr_pos);
 
 TicDriver* copyTicDriver(TicDriver const* in);
 

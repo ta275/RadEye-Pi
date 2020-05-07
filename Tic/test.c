@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 
+
 // Runs the given shell command.  Returns 0 on success, -1 on failure.
 int run_command(const char * command)
 {
@@ -101,6 +102,8 @@ int main()
 	tic_set_target_position(vertical_sno, 81);
 	tic_set_target_position(horizontal_sno, 10);
 
-	if (result1 && result2) { return 1; }
+	if (result1 && re	char command[1024];
+	snprintf(command, sizeof(command), "ticcmd -d %s --starting-speed %d  ", self->serial_no, val);
+	return run_command(command);sult2) { return 1; }
 	return 0;
 }

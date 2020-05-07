@@ -14,7 +14,7 @@
 
 
 // Runs the given shell command.  Returns 0 on success, -1 on failure.
-int run_command(const char * command)
+static int run_command(const char * command)
 {
   int result = system(command);
   if (result)
@@ -24,7 +24,21 @@ int run_command(const char * command)
   }
   return 0;
 }
+static int energize (TicDriver* self)
+{
+	self->isEnergized = 1;
+	char command[1024];
+	snprintf(command, sizeof(command), "ticcmd -d %s --energize", self->serial_no);
+	return run_command(command);
+}
 
+static int deenergize(TicDriver* self)
+{
+	self->isEnergized = 0;
+	char command[1024];
+	snprintf(command, sizeof(command), "ticcmd -d %s --deenergize", self->serial_no);
+	return run_command(command);	
+}
 static int setStepMode(TicDriver* self, uint8_t val)
 {
 	self->step_mode = val;
@@ -79,177 +93,106 @@ static int setCurrentLimit(TicDriver* self, uint8_t val)
 	return run_command(command);
 }
 
-int (*setTargetPos)(struct TicDriver*, int32_t val);
-static void setDir( BED* self, uint8_t dir){
-	if (dir == 0x01) (self->DIR)->writeHigh(self->DIR);
-	if (dir == 0x00) (self->DIR)->writeLow(self->DIR);
+static int setTargetPos(TicDriver* self, int32_t val)
+{
+	self->target_pos = val;
+	if (!self->isEnergized) { self->energize(self); }
+	char command[1024];
+	snprintf(command, sizeof(command), "ticcmd --exit-safe-start -d %s --position %d", self->serial_no, target);
+	result = run_command(command);
+	if (result)
+	{
+		self->curr_pos = val;
+	}
+	return result;
 }
 
-static void setMicro(BED* self, uint8_t res){
-	if (res == 0x01){
-		(self->MS1)->writeLow(self->MS1);
-		(self->MS2)->writeLow(self->MS2);
-		(self->MS3)->writeLow(self->MS3);
-	}
-
-	if (res == 0x02){
-		(self->MS1)->writeHigh(self->MS1);
-		(self->MS2)->writeLow(self->MS2);
-		(self->MS3)->writeLow(self->MS3);
-	}
-
-	if (res == 0x04){
-		(self->MS1)->writeLow(self->MS1);
-		(self->MS2)->writeHigh(self->MS2);
-		(self->MS3)->writeLow(self->MS3);
-	}
-
-	if (res == 0x08){
-		(self->MS1)->writeHigh(self->MS1);
-		(self->MS2)->writeHigh(self->MS2);
-		(self->MS3)->writeLow(self->MS3);
-	}
-
-	if (res == 0x10){
-		(self->MS1)->writeHigh(self->MS1);
-		(self->MS2)->writeHigh(self->MS2);
-		(self->MS3)->writeHigh(self->MS3);
-	}
-
+static int setCurrPos(TicDriver* self, int32_val)
+{
+	char command[1024];
+	snprintf(command, sizeof(command), "ticcmd -d %s --halt-and-set-position %d  ", self->serial_no, val);
+	return run_command(command);
 }
 
 
-static void setEnable(BED* self, uint8_t val){
-	if (val == 0x01) (self->ENABLE)->writeHigh(self->ENABLE);
-	if (val == 0x00) (self->ENABLE)->writeLow(self->ENABLE);
+static int setMaxDecel(TicDriver* self, uint32_t val)
+{
+	char command[1024];
+	snprintf(command, sizeof(command), "ticcmd -d %s --max-decel %d  ", self->serial_no, val);
+	return run_command(command);
 }
 
-static void setRst(BED* self, uint8_t val){
-	if (val == 0x01) (self->RST)->writeHigh(self->RST);
-	if (val == 0x00) (self->RST)->writeLow(self->RST);
+int setMaxAccel(TicDriver* self, uint32_t val)
+{
+	char command[1024];
+	snprintf(command, sizeof(command), "ticcmd -d %s --max-accel %d  ", self->serial_no, val);
+	return run_command(command);
 }
 
-static void setSleep(BED* self, uint8_t val){
-	if (val == 0x01) (self->SLEEP)->writeHigh(self->SLEEP);
-	if (val == 0x00) (self->SLEEP)->writeLow(self->SLEEP);
+int setStartingSpeed(TicDriver* self, uint32_t val)
+{
+	char command[1024];
+	snprintf(command, sizeof(command), "ticcmd -d %s --starting-speed %d  ", self->serial_no, val);
+	return run_command(command);
 }
 
-static void setRot(BED* self, int16_t val){ self->rot = val;}
+int setMaxSpeed(TicDriver* self, uint32_t val)
+{
+	char command[1024];
+	snprintf(command, sizeof(command), "ticcmd -d %s --max-speed %d  ", self->serial_no, val);
+	return run_command(command);
+}
 
-static void step(BED* self){
+static int steps(TicDriver* self, int32_t val){
 
-	(self->STEP)->writeHigh(self->STEP);
+	return self->setTargetPos(self, self->curr_pos + val);
 	
-	_delay_us(stpDelay);
-	
-	(self->STEP)->writeLow(self->STEP);
-	
-	_delay_us(stpDelay);
-}
-
-static void stepNum(BED* self, uint16_t numstp){
-
-	for (uint16_t i = 0; i < numstp; i++){
-		self->step(self);
-	}
 }
 
 
-static void steps(BED* self, int16_t num, uint8_t res){
-	if (self->getMicro(self) != res) self->setMicro(self, res);
-
-	if (num < 0){
-		if (self->getDir(self) != 0) self->setDir(self, 0);
-
-		self->stepNum(self, (uint16_t) (-1*num));
-	}
 
 
-	if (num > 0){
-		if (self->getDir(self) != 1) self->setDir(self, 1);
+TicDriver* createTicDriver(const char* serial_no, uint32_t max_speed, 
+	uint32_t starting_speed, uint32_t max_decel, uint32_t max_accel, 
+	uint8_t step_mode, uint16_t current_limit, int32_t curr_pos)
+{
+	TicDriver* driver = (TicDriver*) malloc(sizeof(TicDriver));
 
-		self->stepNum(self, (uint16_t) num );
-	}
-
-}
-
-static uint8_t getMicro(BED* self){
-	if (!(self->MS1)->read(self->MS1)){
-
-		if ((self->MS2)->read(self->MS2)) return 0x04;
-		return 0x01;
-	}
-
-	if (!(self->MS2)->read(self->MS2)) return 0x02;
-
-	if ((self->MS3)->read(self->MS3)) return 0x10;
-
-	return 0x08;
-}
-
-
-static uint8_t getDir(BED* self) { return (self->DIR)->read(self->DIR); }
-
-
-static uint8_t getEnable(BED* self){ return (self->ENABLE)->read(self->DIR); }
-
-static uint8_t getRst(BED* self){ return (self->RST)->read(self->RST); }
-
-static uint8_t getSleep(BED* self){ return (self->SLEEP)->read(self->SLEEP); }
-
-static int16_t getRot(BED* self){ return self->rot; }
-
-
-
-BED* createBED(GPIO* ENABLE, GPIO* MS1, GPIO* MS2, GPIO* MS3, GPIO* RST, GPIO* SLEEP, GPIO* STEP, GPIO* DIR){
-	BED* driver = (BED*) malloc(sizeof(BED));
 
 	if (driver == NULL) {
 	/* Handle malloc failure */
 	;
 	}
 
-	*driver = (BED){.ENABLE=ENABLE, .MS1=MS1, .MS2=MS2, .MS3=MS3, .RST=RST,
+	*driver = (TicDriver){.serial_no = serial_no,
+						  .max_speed=max_speed, .starting_speed=starting_speed, 
+						  .max_decel=max_decel, .max_accel=max_accel,
+						  .step_mode=step_mode, .current_limit=current_limit,
+						  .curr_pos=curr_pos, .isEnergized=0,
+						  .energize=energize, .deenergize=deenergize,
+						  .setStepMode=setStepMode, .setCurrentLimit=setCurrentLimit,
+						  .setTargetPos=setTargetPos, .setCurrPos=setCurrPos,
+						  .setMaxDecel=setMaxDecel, .setMaxAccel=setMaxAccel,
+						  .setStartingSpeed=setStartingSpeed,
+						  .setMaxSpeed=setMaxSpeed, .steps=steps
+						};
 
-					.SLEEP=SLEEP, .STEP=STEP, .DIR=DIR, .setDir=setDir,
-
-					.setMicro=setMicro, .setEnable=setEnable, .setRst=setRst,
-
-					.setSleep=setSleep, .setRot=setRot,
-
-					.step=step, .stepNum=stepNum, .steps=steps,
-
-					.getMicro=getMicro, .getDir=getDir, .getEnable=getEnable,
-
-					.getRst=getRst, .getSleep=getSleep, .getRot=getRot, .rot=0};
-
-
-	(driver->ENABLE)->setAsOutput(driver->ENABLE);
-	(driver->MS1)->setAsOutput(driver->MS1);
-	(driver->MS2)->setAsOutput(driver->MS2);
-	(driver->MS3)->setAsOutput(driver->MS3);
-	(driver->RST)->setAsOutput(driver->RST);
-	(driver->SLEEP)->setAsOutput(driver->SLEEP);
-	(driver->STEP)->setAsOutput(driver->STEP);
-	(driver->DIR)->setAsOutput(driver->DIR);
-
-	(driver->ENABLE)->writeLow(driver->ENABLE);
-	(driver->MS1)->writeLow(driver->MS1);
-	(driver->MS2)->writeLow(driver->MS2);
-	(driver->MS3)->writeLow(driver->MS3);
-	(driver->RST)->writeHigh(driver->RST);
-	(driver->SLEEP)->writeHigh(driver->SLEEP);
-	(driver->STEP)->writeLow(driver->STEP);
-	(driver->DIR)->writeLow(driver->DIR);
+	driver->deenergize(driver);
+	driver->setMaxSpeed(driver,max_speed);
+	driver->setStartingSpeed(driver,starting_speed);
+	driver->setMaxDecel(driver, max_decel);
+	driver->setMaxAccel(driver, max_accel);
+	driver->setStepMode(driver, step_mode);
+	driver->setCurrentLimit(driver, current_limit);
+	driver->setCurrPos(driver, curr_pos);
 
 	return driver;
 }
 
-BED* copyBED(BED const* in){
-	BED* out = malloc(sizeof(BED));
-
+TicDriver* copyTicDriver(TicDriver const* in){
+	TicDriver* out = malloc(sizeof(TicDriver));
 	*out = *in;
 	return out;
 }
 
-void freeBED(BED* in){ free(in); }
+void freeTicDriver(TicDriver* in){ free(in); }
