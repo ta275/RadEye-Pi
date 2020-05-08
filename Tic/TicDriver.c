@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "misc.h"
-#include <tic.h>
+// #include <tic.h>
 
 
 // Runs the given shell command.  Returns 0 on success, -1 on failure.
