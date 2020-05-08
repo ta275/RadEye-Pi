@@ -28,7 +28,6 @@ int main()
 
 	
 	vertical->steps(vertical, full_vertical*mult);
-
 	sleep(2);
 	vertical->steps(vertical, -1*full_vertical*mult);
 	

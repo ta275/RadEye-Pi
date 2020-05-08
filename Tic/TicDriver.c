@@ -177,7 +177,7 @@ static int setMaxSpeed(TicDriver* self, uint32_t val)
 static int steps (TicDriver* self, int32_t val)
 {
 	int result = self->setTargetPos(self, self->curr_pos + val);
-	delayMicrosecondsHard(100);
+	// delayMicrosecondsHard(100);
 	return result;
 }
 
