@@ -121,8 +121,9 @@ params.filterByColor = False
 detector = cv.SimpleBlobDetector_create(params)
 
 
-keypoints = detector.detect(thresh1)
+keypoints = detector.detect(warped)
 pointer = keypoints[0]
+
 
 # # Draw detected blobs as red circles.
 im_with_keypoints = cv.drawKeypoints(warped, keypoints, np.array([]), (0,0,255), cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)

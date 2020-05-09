@@ -51,6 +51,8 @@ typedef struct  TicDriver{
 
 	int (*steps) (struct TicDriver*, int32_t val);
 
+	int (*updateCurrPos)(struct TicDriver*);
+
 
 
 } TicDriver;

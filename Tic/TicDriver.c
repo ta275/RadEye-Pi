@@ -101,12 +101,13 @@ static int setTargetPos(TicDriver* self, int32_t val)
 	if (!self->isEnergized) { self->energize(self); }
 	char command[1024];
 	snprintf(command, sizeof(command), "ticcmd --exit-safe-start -d %s --position %d", self->serial_no, val);
-	int result = run_command(command);
-	if (result == 0)
-	{
-		self->curr_pos = val;
-	}
-	return result;
+	// int result = run_command(command);
+	// if (result == 0)
+	// {
+	// 	self->curr_pos = val;
+	// }
+	// return result;
+	return run_command(command);
 }
 
 static int setCurrPos(TicDriver* self, int32_t val)
@@ -177,10 +178,49 @@ static int setMaxSpeed(TicDriver* self, uint32_t val)
 static int steps (TicDriver* self, int32_t val)
 {
 	int result = self->setTargetPos(self, self->curr_pos + val);
-	// delayMicrosecondsHard(100);
+	self->updateCurrPos(self);
+	while (self->curr_pos != self->target_pos)
+	{
+		self->updateCurrPos(self);
+	}
 	return result;
 }
 
+static int updateCurrPos(TicDriver* self)
+{
+	FILE* fp;
+	char str1[21];
+	char str2[21];
+
+	int result = 1;
+	int32_t pos;
+
+
+	char command[201];
+	snprintf(command, sizeof(command), "ticcmd -d %s -s", self->serial_no);
+
+	fp = popen(command, "r");
+	if (fp == NULL){return -1;}
+	while (result != EOF){
+		result = fscanf(fp, "%s", str1);
+
+		if (strcmp(str1, "Current") == 0)
+		{
+			fscanf(fp, "%s", str2);
+			if (strcmp(str2, "position:") == 0)
+			{
+				fscanf(fp, "%d", &pos);
+				// printf("current position is %d\n", pos);
+				pclose(fp);
+				result = EOF;
+			}
+		}
+		
+	}
+	self->curr_pos = pos;
+	return 0;
+
+}
 
 
 TicDriver* createTicDriver(const char* serial_no, uint32_t max_speed, 
@@ -205,7 +245,7 @@ TicDriver* createTicDriver(const char* serial_no, uint32_t max_speed,
 						  .setTargetPos=setTargetPos, .setCurrPos=setCurrPos,
 						  .setMaxDecel=setMaxDecel, .setMaxAccel=setMaxAccel,
 						  .setStartingSpeed=setStartingSpeed,
-						  .setMaxSpeed=setMaxSpeed, .steps=steps
+						  .setMaxSpeed=setMaxSpeed, .steps=steps, .updateCurrPos=updateCurrPos;
 						};
 
 	snprintf(driver->serial_no, sizeof(driver->serial_no), serial_no);
