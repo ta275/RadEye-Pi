@@ -86,7 +86,7 @@ class ImageProcessor:
 		# capture into stream
 		camera.capture(self.stream, format='jpeg', use_video_port=True)
 		# convert image into numpy array
-		data = np.fromstring(self.stream.getvalue(), dtype=np.uint8)
+		data = np.frombuffer(self.stream.getvalue(), dtype=np.uint8)
 		# turn the array into a cv2 image
 		img = cv.imdecode(data, 1)
 		self.updateImage(img)
@@ -166,11 +166,11 @@ class ImageProcessor:
 			cv.circle(self.image,(i[0],i[1]),3,255,-1)
 
 
-		pointer = self.keypoints[0]
+		#pointer = self.keypoints[0]
 		# for i in range(0,100):
 		# 	im_with_keypoints[int(pointer.pt[1])+i][int(pointer.pt[0])] = np.array([255,0,0])
 		# im_with_keypoints[int(pointer.pt[1]):int(pointer.pt[1]+20)][int(pointer.pt[0])] = np.array([255,0,0])
-
+		cv.imwrite("ProcImages/cropped.jpeg", self.image)
 		cv.imwrite("ProcImages/topl.jpeg", topl_box)
 		cv.imwrite("ProcImages/topr.jpeg", topr_box)
 		cv.imwrite("ProcImages/botr.jpeg", botr_box)
@@ -236,11 +236,14 @@ if __name__ == '__main__':
 	# screen_mm = [181, 268]
 
 	# image = cv.imread('Test_Images/V2/img1.jpeg')
-	topl_crop = [0.05, 0.01]
-	botr_crop = [0.96, 0.98]
-	box_ratio = [0.2, 0.2]
+	#topl_crop = [0.05, 0.01]
+	#botr_crop = [0.96, 0.98]
+	#box_ratio = [0.2, 0.2]
 	screen_mm = [181, 268]
-
+	
+	topl_crop = [0.17, 0.12]
+	botr_crop = [0.98, 1]
+	box_ratio = [0.15, 0.15]
 
 	max_corners = 1
 	quality_level = 0.1
@@ -288,11 +291,12 @@ if __name__ == '__main__':
 	maxInertiaRatio, filterByColor)
 
 
-	# IP.blobDetect()
+	#IP.blobDetect()
 	# print(IP.getBlobCoord_n_Color(image))
 	with picamera.PiCamera() as camera:
 		camera.resolution = (1640, 1232)
 		IP.captureImage(camera)
+	IP.blobDetect()
 	IP.saveImages()
 
 	# IP.detectCorners()
