@@ -84,12 +84,12 @@ class ImageProcessor:
 	def captureImage(self, camera):
 		self.stream.seek(0)
 		# capture into stream
-		camera.capture(stream, format='jpeg', use_video_port=True)
-	    # convert image into numpy array
-	    data = np.fromstring(stream.getvalue(), dtype=np.uint8)
-	    # turn the array into a cv2 image
-	    img = cv.imdecode(data, 1)
-	    self.updateImage(img)
+		camera.capture(self.stream, format='jpeg', use_video_port=True)
+		# convert image into numpy array
+		data = np.fromstring(self.stream.getvalue(), dtype=np.uint8)
+		# turn the array into a cv2 image
+		img = cv.imdecode(data, 1)
+		self.updateImage(img)
 
 	def updateImage(self, image):
 		h_pix, w_pix, _ = image.shape
@@ -290,7 +290,9 @@ if __name__ == '__main__':
 
 	# IP.blobDetect()
 	# print(IP.getBlobCoord_n_Color(image))
-	IP.captureImage()
+	with picamera.PiCamera() as camera:
+		camera.resolution = (1640, 1232)
+		IP.captureImage(camera)
 	IP.saveImages()
 
 	# IP.detectCorners()
