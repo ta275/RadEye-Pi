@@ -235,7 +235,7 @@ if __name__ == '__main__':
 	# box_ratio = [0.1, 0.1]
 	# screen_mm = [181, 268]
 
-	image = cv.imread('Test_Images/V2/img1.jpeg')
+	# image = cv.imread('Test_Images/V2/img1.jpeg')
 	topl_crop = [0.05, 0.01]
 	botr_crop = [0.96, 0.98]
 	box_ratio = [0.2, 0.2]
@@ -289,7 +289,8 @@ if __name__ == '__main__':
 
 
 	# IP.blobDetect()
-	print(IP.getBlobCoord_n_Color(image))
+	# print(IP.getBlobCoord_n_Color(image))
+	IP.captureImage()
 	IP.saveImages()
 
 	# IP.detectCorners()
