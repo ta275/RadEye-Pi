@@ -26,11 +26,15 @@ int main()
 	TicDriver* horizontal = createTicDriver(horizontal_sno, max_speed, starting_speed,
 	 max_decel, max_accel, step_mode, current_limit, curr_pos);
 
-	
-	vertical->steps(vertical, full_vertical*mult);
+	//for (int i = 0; i < full_vertical*mult/8; i++)
+	//{
+	//	vertical->steps(vertical, 8);
+	//}
+	//vertical->steps(vertical, full_vertical*mult);
 	// sleep(2);
-	vertical->steps(vertical, -1*full_vertical*mult);
-	
+	//vertical->steps(vertical, -1*full_vertical*mult);
+	//vertical->steps(vertical, full_vertical*mult*0.79);
+	vertical->steps(vertical, full_vertical*mult*0.3635);
 	// vertical->deenergize(vertical);
 
 }

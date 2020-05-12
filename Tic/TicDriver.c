@@ -183,7 +183,7 @@ static int steps (TicDriver* self, int32_t val)
 	while (self->curr_pos != self->target_pos)
 	{
 		self->updateCurrPos(self);
-		printf ("%d", self->curr_pos);
+		//printf ("%d \n", self->curr_pos);
 	}
 	return result;
 }
