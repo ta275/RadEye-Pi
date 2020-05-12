@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "misc.h"
+#include <string.h>
 // #include <tic.h>
 
 
@@ -245,7 +246,7 @@ TicDriver* createTicDriver(const char* serial_no, uint32_t max_speed,
 						  .setTargetPos=setTargetPos, .setCurrPos=setCurrPos,
 						  .setMaxDecel=setMaxDecel, .setMaxAccel=setMaxAccel,
 						  .setStartingSpeed=setStartingSpeed,
-						  .setMaxSpeed=setMaxSpeed, .steps=steps, .updateCurrPos=updateCurrPos;
+						  .setMaxSpeed=setMaxSpeed, .steps=steps, .updateCurrPos=updateCurrPos
 						};
 
 	snprintf(driver->serial_no, sizeof(driver->serial_no), serial_no);
