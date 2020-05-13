@@ -10,7 +10,9 @@ import os
 # screen_mm = [181, 268]
 def moveDown():
 	os.system("./down")
-
+def init():
+	os.system("./init")
+	time.sleep(2)
 if __name__ == '__main__':	
 	screen_mm = [181, 268]
 
@@ -80,7 +82,7 @@ if __name__ == '__main__':
 		    	# time.sleep(2)
 
 
-
+	init()
 	with picamera.PiCamera() as camera:
 		camera.resolution = (1640, 1232)
 		for i in range(100):
