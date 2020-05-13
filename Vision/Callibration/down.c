@@ -21,6 +21,6 @@ int main()
 	TicDriver* vertical = createTicDriver(vertical_sno, max_speed, starting_speed,
 	 max_decel, max_accel, step_mode, current_limit, curr_pos);
 
-	vertical->steps(vertical, 2);
+	vertical->steps(vertical, 3);
 
 }

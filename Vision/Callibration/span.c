@@ -40,13 +40,20 @@ int main()
 	//vertical->steps(vertical, 235);
 	sleep(2);
 	vertical->steps(vertical, 232);
-	// sleep(2);
-	// vertical->steps(vertical, 312);
-	// printf("%d \n", vertical->curr_pos);
-	// sleep(2);
-	// vertical->steps(vertical, -1*vertical->curr_pos);
-	// sleep(2);
-	// printf("%d \n", vertical->curr_pos);
+	sleep(2);
+	vertical->steps(vertical, 312);
+	printf("%d \n", vertical->curr_pos);
+	sleep(2);
+	vertical->steps(vertical, -1*vertical->curr_pos);
+	sleep(2);
+	printf("%d \n", vertical->curr_pos);
+	vertical->deenergize(vertical);
+	// vertical->steps(vertical, -280);
+	// vertical->steps(vertical, 480);
+	// vertical->steps(vertical, -480);
+	// vertical->steps(vertical, 280);
+	// vertical->steps(vertical, 200);
+	// vertical->steps(vertical, -480);
 	// vertical->deenergize(vertical);
 
 }
