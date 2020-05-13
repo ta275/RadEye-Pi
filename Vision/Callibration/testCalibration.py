@@ -95,4 +95,4 @@ if __name__ == '__main__':
 			print(IP.getBlobCoord_n_Color())
 			moveDown()
 
-	goback()
+	goBack()
