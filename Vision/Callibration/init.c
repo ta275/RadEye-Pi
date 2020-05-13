@@ -23,8 +23,8 @@ int main()
 	TicDriver* vertical = createTicDriver(vertical_sno, max_speed, starting_speed,
 	 max_decel, max_accel, step_mode, current_limit, curr_pos);
 	
-	TicDriver* horizontal = createTicDriver(horizontal_sno, max_speed, starting_speed,
-	 max_decel, max_accel, step_mode, current_limit, curr_pos);
+	//TicDriver* horizontal = createTicDriver(horizontal_sno, max_speed, starting_speed,
+	//max_decel, max_accel, step_mode, current_limit, curr_pos);
 	
 	//for (int i = 0; i < full_vertical*mult/8; i++)
 	//{
@@ -35,7 +35,19 @@ int main()
 	//vertical->steps(vertical, -1*full_vertical*mult);
 	//vertical->steps(vertical, full_vertical*mult*0.79);
 	//vertical->steps(vertical, full_vertical*mult*0.3635);
-	vertical->steps(vertical, 280);
+	vertical->deenergize(vertical);
+	vertical->energize(vertical);
+	//vertical->steps(vertical, 235);
+	sleep(2);
+	vertical->steps(vertical, 232);
+	sleep(2);
+	vertical->steps(vertical, 312);
+	printf("%d \n", vertical->curr_pos);
+	sleep(2);
+	vertical->steps(vertical, -1*vertical->curr_pos);
+	sleep(2);
+	printf("%d \n", vertical->curr_pos);
+	vertical->deenergize(vertical);
 	// vertical->steps(vertical, -280);
 	// vertical->steps(vertical, 480);
 	// vertical->steps(vertical, -480);
