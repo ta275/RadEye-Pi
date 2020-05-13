@@ -10,9 +10,14 @@ import os
 # screen_mm = [181, 268]
 def moveDown():
 	os.system("./down")
+	time.sleep(0.1)
 def init():
 	os.system("./init")
 	time.sleep(2)
+
+def goBack():
+	os.system("./goBack")
+
 if __name__ == '__main__':	
 	screen_mm = [181, 268]
 
@@ -85,7 +90,9 @@ if __name__ == '__main__':
 	init()
 	with picamera.PiCamera() as camera:
 		camera.resolution = (1640, 1232)
-		for i in range(100):
+		for i in range(105):
 			IP.captureImage(camera)
 			print(IP.getBlobCoord_n_Color())
 			moveDown()
+
+	goback()
