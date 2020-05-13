@@ -2,7 +2,7 @@
 #include <iostream>
 #include <raspicam/raspicam_cv.h>
 using namespace std; 
- 
+using namespace cv; 
 int main ( int argc,char **argv ) {
    
     time_t timer_begin,timer_end;
