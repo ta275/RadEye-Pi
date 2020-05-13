@@ -82,8 +82,8 @@ if __name__ == '__main__':
 
 
 	with picamera.PiCamera() as camera:
-	    camera.resolution = (1640, 1232)
-	    for i in range(100):
-	    	IP.captureImage(camera)
-		    print(IP.getBlobCoord_n_Color(image))
-		    moveDown()
+		camera.resolution = (1640, 1232)
+		for i in range(100):
+			IP.captureImage(camera)
+			print(IP.getBlobCoord_n_Color())
+			moveDown()
